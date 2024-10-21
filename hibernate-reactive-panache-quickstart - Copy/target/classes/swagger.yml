@@ -1,0 +1,48 @@
+openapi: 3.0.1
+info:
+  title: Jokes API
+  description: Provide jokes on demand
+  version: 0.0.1
+servers:
+  - url: /
+    description: Default Server
+    variables:
+      basePath:
+        description: Base path for the API
+        default: /
+paths:
+  /jokes:
+    get:
+      tags:
+        - joke-controller
+      operationId: getJokes
+      parameters:
+        - name: count
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int32
+            minimum: 1
+            maximum: 100
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DtoRes'
+components:
+  schemas:
+    DtoRes:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        question:
+          type: string
+        answer:
+          type: string
